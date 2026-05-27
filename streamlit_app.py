@@ -10,7 +10,7 @@ st.set_page_config(page_title="AI Job Risk Report Generator", page_icon="", layo
 API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=API_KEY) if API_KEY else None
 
-DATA_URL = "https://raw.githubusercontent.com/rgsvm/AI-Automation/main/your_data_file.csv"
+DATA_URL = "global_ai_workforce_automation_2015_2025.csv"
 
 @st.cache_data
 def load_data(path: str) -> pd.DataFrame:
