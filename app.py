@@ -29,7 +29,20 @@ def main():
         st.error(f"Failed to load data: {e}")
         st.stop()
 
-    required_cols = ["Year", "Country", "AIInvestmentBillionUSD", "AutomationRatePercent", "EmploymentRatePercent", "AverageSalaryUSD", "ProductivityIndex", "ReskillingInvestmentMillionUSD", "AIPolicyIndex", "JobDisplacementMillion", "JobCreationMillion", "AIReadinessScore"]
+    required_cols = [
+        "Year",
+        "Country",
+        "AI_Investment_BillionUSD",
+        "Automation_Rate_Percent",
+        "Employment_Rate_Percent",
+        "Average_Salary_USD",
+        "Productivity_Index",
+        "Reskilling_Investment_MillionUSD",
+        "AI_Policy_Index",
+        "Job_Displacement_Million",
+        "Job_Creation_Million",
+        "AI_Readiness_Score",
+    ]
     missing_cols = [c for c in required_cols if c not in df.columns]
     if missing_cols:
         st.error(f"Missing required columns: {', '.join(missing_cols)}")
@@ -52,14 +65,14 @@ def main():
 
         with left:
             plot_df = filtered.copy()
-            plot_df["AIReadinessScore"] = pd.to_numeric(plot_df["AIReadinessScore"], errors="coerce")
-            plot_df = plot_df.dropna(subset=["AIReadinessScore"]).sort_values("AIReadinessScore", ascending=False).head(10)
+            plot_df["AI_Readiness_Score"] = pd.to_numeric(plot_df["AI_Readiness_Score"], errors="coerce")
+            plot_df = plot_df.dropna(subset=["AI_Readiness_Score"]).sort_values("AI_Readiness_Score", ascending=False).head(10)
 
             if len(plot_df) > 0:
                 fig1 = px.bar(
                     plot_df,
                     x="Country",
-                    y="AIReadinessScore",
+                    y="AI_Readiness_Score",
                     color="Country",
                     title="Top AI Readiness Scores",
                 )
@@ -69,14 +82,14 @@ def main():
 
         with right:
             plot_df = filtered.copy()
-            plot_df["AutomationRatePercent"] = pd.to_numeric(plot_df["AutomationRatePercent"], errors="coerce")
-            plot_df = plot_df.dropna(subset=["AutomationRatePercent"])
+            plot_df["Automation_Rate_Percent"] = pd.to_numeric(plot_df["Automation_Rate_Percent"], errors="coerce")
+            plot_df = plot_df.dropna(subset=["Automation_Rate_Percent"])
 
             if len(plot_df) > 0:
                 fig2 = px.line(
                     plot_df,
                     x="Year",
-                    y="AutomationRatePercent",
+                    y="Automation_Rate_Percent",
                     color="Country",
                     title="Automation Rate Over Time",
                     markers=True,
@@ -89,28 +102,28 @@ def main():
 
         with bottom_left:
             plot_df = filtered.copy()
-            plot_df["AverageSalaryUSD"] = pd.to_numeric(plot_df["AverageSalaryUSD"], errors="coerce")
-            plot_df = plot_df.dropna(subset=["AverageSalaryUSD"])
+            plot_df["Average_Salary_USD"] = pd.to_numeric(plot_df["Average_Salary_USD"], errors="coerce")
+            plot_df = plot_df.dropna(subset=["Average_Salary_USD"])
 
             if len(plot_df) > 0:
                 fig3 = px.box(
                     plot_df,
                     x="Country",
-                    y="AverageSalaryUSD",
+                    y="Average_Salary_USD",
                     title="Average Salary by Country",
                 )
                 st.plotly_chart(fig3, use_container_width=True)
 
         with bottom_right:
             plot_df = filtered.copy()
-            plot_df["ReskillingInvestmentMillionUSD"] = pd.to_numeric(plot_df["ReskillingInvestmentMillionUSD"], errors="coerce")
-            plot_df = plot_df.dropna(subset=["ReskillingInvestmentMillionUSD"])
+            plot_df["Reskilling_Investment_MillionUSD"] = pd.to_numeric(plot_df["Reskilling_Investment_MillionUSD"], errors="coerce")
+            plot_df = plot_df.dropna(subset=["Reskilling_Investment_MillionUSD"])
 
             if len(plot_df) > 0:
                 fig4 = px.pie(
                     plot_df,
                     names="Country",
-                    values="ReskillingInvestmentMillionUSD",
+                    values="Reskilling_Investment_MillionUSD",
                     title="Reskilling Investment Share",
                 )
                 st.plotly_chart(fig4, use_container_width=True)
